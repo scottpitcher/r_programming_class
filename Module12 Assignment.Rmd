@@ -1,0 +1,61 @@
+---
+title: "Module 12 Assignment"
+author: "Scott Pitcher"
+date: "3/31/2024"
+output: pdf_document
+---
+
+```{r Function 1}
+# Function 1 ####
+## Purpose: To calculate the portion of one's carbon emissions dedicated to  ####
+## Inputs: distance traveled, mode of transport, and efficiency####
+## Outputs: estimated carbon emissions in kg####
+
+calculateTransportEmissions <- function(distance, transportMode, efficiency) {
+  # Define emission factors for different transport modes (kg CO2 per liter of fuel or per passenger-km for public transport)
+  emissionFactors <- c(car = 2.31, bus = 0.104, airplane = 0.255) # Example values; adjust based on research
+  
+  # Calculate emissions based on mode
+  if (transportMode %in% c("car", "airplane")) {
+    # For cars and airplanes, emissions are based on efficiency (liters per 100 km or emissions factor) and distance
+    emissions <- (distance / 100) * efficiency * emissionFactors[transportMode]
+  } else if (transportMode == "bus") {
+    # For buses, assume efficiency is passenger-km per liter, calculate emissions per passenger
+    emissions <- distance * emissionFactors[transportMode]
+  } else {
+    stop("Unsupported transport mode")
+  }
+  
+  return(emissions) # Returns emissions in kg of CO2 equivalent
+}
+
+# Please note the values used are rough estimates, may need to be refined on further research
+
+```
+
+
+```{r Function 2}
+# Function 2 ####
+## Purpose: calculate domestic water usage####
+## Inputs: number of people in the household, usage type####
+## Outputs: total usage of water in liters####
+
+calculateDomesticWaterUsage <- function(numberOfPeople, usageType) {
+  # Define average water usage (in liters) per person per day for different activities
+  averageUsage <- c(drinking = 2, bathing = 80, cooking = 5) # Example values; adjust based on research
+  
+  # Check if the usageType is valid
+  if (!usageType %in% names(averageUsage)) {
+    stop("Unsupported usage type")
+  }
+  
+  # Calculate total water usage
+  totalUsage <- numberOfPeople * averageUsage[usageType]
+  
+  return(totalUsage) # Returns water usage in liters per day
+}
+
+
+
+
+```
